@@ -16,8 +16,9 @@ const firebaseConfig = {
 };
 
 /* Initialisierung (compat) */
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const auth = firebase.auth();
+const db = firebase.firestore();
+const storage = firebase.storage();
 
 /* ---------------------------
    Restliche App-Logik (vereinfachte Demo-Version)
