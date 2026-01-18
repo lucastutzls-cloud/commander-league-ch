@@ -1,37 +1,61 @@
-// theme-ui.js — füllt user email in .user-pill und setzt logout handler
-// Leg diese Datei in dasselbe Verzeichnis wie index.html und binde sie mit <script src="theme-ui.js" defer></script>
+// theme-ui.js
+// Füllt die User‑Pill mit Firebase Auth user.email und bindet den Logout-Button.
+// Lade diese Datei mit <script src="theme-ui.js" defer></script>
+// Erwartet: firebase & firebase.auth() sind bereits initiiert (app.js geladen).
 
 (function(){
   function initUserPill(){
-    if(!window.firebase || !firebase.auth) {
-      console.warn('Firebase Auth nicht gefunden.');
+    if (typeof window.firebase === 'undefined' || !firebase.auth) {
+      console.warn('theme-ui: Firebase Auth nicht gefunden. Stelle sicher, dass firebase & app.js vor theme-ui.js geladen sind.');
       return;
     }
-    const pill = document.querySelector('.user-pill .email');
-    const logoutBtn = document.querySelector('.btn-logout');
 
-    firebase.auth().onAuthStateChanged(user => {
-      if(user) {
-        if(pill) pill.textContent = user.email || (user.displayName || 'Benutzer');
-        if(logoutBtn) logoutBtn.style.display = 'inline-block';
+    // Query elements (existence optional)
+    var pillEmailEl = document.querySelector('.user-pill .email') || document.querySelector('#logged-as') || null;
+    var logoutBtn = document.querySelector('.btn-logout') || document.querySelector('#btn-signout') || null;
+
+    // Set initial visibility
+    if (logoutBtn) logoutBtn.style.display = 'none';
+
+    // Observe auth state
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        var display = user.email || user.displayName || ('User ' + (user.uid ? user.uid.substring(0,6) : ''));
+        if (pillEmailEl) {
+          // if element is an input or simple element, set accordingly
+          if ('value' in pillEmailEl) pillEmailEl.value = display;
+          else pillEmailEl.textContent = display;
+        }
+        if (logoutBtn) logoutBtn.style.display = '';
       } else {
-        if(pill) pill.textContent = 'nicht eingeloggt';
-        if(logoutBtn) logoutBtn.style.display = 'none';
+        if (pillEmailEl) {
+          if ('value' in pillEmailEl) pillEmailEl.value = 'nicht eingeloggt';
+          else pillEmailEl.textContent = 'nicht eingeloggt';
+        }
+        if (logoutBtn) logoutBtn.style.display = 'none';
       }
     });
 
-    if(logoutBtn){
-      logoutBtn.addEventListener('click', async () => {
-        try {
-          await firebase.auth().signOut();
-          // optional: redirect to login
-          console.log('Logged out');
-        } catch (e) { console.error('Logout failed', e); }
+    // Logout handler
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', function(e){
+        e.preventDefault();
+        // Some UIs want a confirm — keep simple logout
+        firebase.auth().signOut().then(function(){
+          console.log('theme-ui: user logged out');
+          // optional: redirect to /login or show a toast
+        }).catch(function(err){
+          console.error('theme-ui: logout failed', err);
+          alert('Logout fehlgeschlagen: ' + (err && err.message ? err.message : err));
+        });
       });
     }
   }
 
-  if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', initUserPill, { once:true });
-  } else initUserPill();
+  // Auto-init after DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initUserPill, { once: true });
+  } else {
+    initUserPill();
+  }
 })();
