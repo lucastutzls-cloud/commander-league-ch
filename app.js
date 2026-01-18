@@ -3,7 +3,7 @@
 */
 
 /* ---------------------------
-   Firebase Config (ERSETZEN)
+   Firebase Config (ERSETZEN falls nötig)
    --------------------------- */
 const firebaseConfig = {
   apiKey: "AIzaSyCOyHrZXJkJtS2UzddH0sCN_NzRiILIheI",
@@ -15,7 +15,15 @@ const firebaseConfig = {
   measurementId: "G-TJP8BYHC0F"
 };
 
-/* Initialisierung (compat) */
+/* Initialisierung (compat) - WICHTIG: zuerst initialisieren, dann firebase.* verwenden */
+if (!firebase.apps || firebase.apps.length === 0) {
+  firebase.initializeApp(firebaseConfig);
+} else {
+  // Falls bereits initialisiert (z. B. bei Hot-Reload), verwende die bestehende App
+  firebase.app();
+}
+
+/* Danach die compat-APIs nutzen */
 const auth = firebase.auth();
 const db = firebase.firestore();
 const storage = firebase.storage();
