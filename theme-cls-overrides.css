@@ -1,60 +1,102 @@
-/* Overrides — lade diese Datei nach deiner originalen styles.css und nach theme-cls.css (oder am Ende von theme-cls.css) */
+/* Overrides speziell für Projekte mit #cls-app
+   Lade diese Datei NACH deiner originalen styles.css und NACH theme-cls.css
+   Wichtig: nutzt hohe Spezifität (#cls-app.cls-shell) statt !important wo möglich.
+*/
 
-/* Force dark panels in sidebar / small lists */
-.cls-shell .sidebar .sidebar-section,
-.cls-shell .sidebar .panel,
-.cls-shell .player-list,
-.cls-shell .player-management,
-.cls-shell .sidebar-section,
-.cls-shell .player-item,
-.cls-shell .player-row {
-  background: linear-gradient(180deg, rgba(10,14,17,0.55), rgba(8,12,14,0.36)) !important;
-  color: var(--text) !important;
-  border: 1px solid rgba(255,255,255,0.03) !important;
-  box-shadow: 0 8px 24px rgba(2,6,12,0.35) !important;
+#cls-app.cls-shell {
+  /* synchronize theme variables with existing app variables if needed */
+  --panel-dark: rgba(10,14,17,0.55);
+  --panel-strong: rgba(8,12,14,0.36);
+  --glass-border: rgba(255,255,255,0.03);
+  --muted-text: rgba(255,255,255,0.68);
+  background: linear-gradient(180deg, rgba(2,6,8,0.95), rgba(6,11,12,0.9));
 }
 
-/* Make inputs / labels match theme */
-.cls-shell input,
-.cls-shell textarea,
-.cls-shell select,
-.cls-shell label,
-.cls-shell .player-item label,
-.cls-shell .player-item {
-  background: transparent !important;
+/* Panels, cards, deck-cards, entries */
+#cls-app.cls-shell .card,
+#cls-app.cls-shell .card *,
+#cls-app.cls-shell .card .wrap,
+#cls-app.cls-shell .deckCard,
+#cls-app.cls-shell .deckTop,
+#cls-app.cls-shell .entry,
+#cls-app.cls-shell .list,
+#cls-app.cls-shell .checkrow,
+#cls-app.cls-shell .lockScreen,
+#cls-app.cls-shell .modal {
+  background: linear-gradient(180deg, var(--panel-dark), var(--panel-strong));
+  border: 1px solid var(--glass-border);
   color: var(--text) !important;
-  border-color: rgba(255,255,255,0.04) !important;
+  box-shadow: 0 8px 24px rgba(2,6,12,0.45);
 }
 
-/* Checkbox / list items text */
-.cls-shell .player-item,
-.cls-shell .player-item .player-name {
-  color: var(--text) !important;
-  opacity: 0.95;
+/* Inputs / selects / textarea — use darker panels and light text */
+#cls-app.cls-shell input,
+#cls-app.cls-shell select,
+#cls-app.cls-shell textarea,
+#cls-app.cls-shell button,
+#cls-app.cls-shell .pill,
+#cls-app.cls-shell .pill-input {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.04);
+  color: var(--text);
 }
 
-/* Buttons in sidebar should use themed styles */
-.cls-shell .sidebar .btn,
-.cls-shell .sidebar .btn-ghost,
-.cls-shell .sidebar .report-btn {
-  background: transparent !important;
-  color: var(--text) !important;
-  border: 1px solid rgba(255,255,255,0.04) !important;
+/* Buttons: primary / ghost / danger */
+#cls-app.cls-shell button {
+  color: var(--text);
+}
+#cls-app.cls-shell button.ghost,
+#cls-app.cls-shell .btn-ghost {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.04);
+  color: var(--text);
+}
+#cls-app.cls-shell button[disabled] {
+  opacity: 0.6;
+  filter: none;
 }
 
-/* Specific: player-management list entries (from your ui.js markup) */
-.cls-shell #player-management .player-row,
-.cls-shell #player-management .player-item {
-  background: rgba(255,255,255,0.02) !important;
-  color: var(--text) !important;
-  border: 1px solid rgba(255,255,255,0.02) !important;
+/* Player list / checkrows dark override */
+#cls-app.cls-shell .checklist,
+#cls-app.cls-shell .checkrow,
+#cls-app.cls-shell .player-item,
+#cls-app.cls-shell .player-row {
+  background: linear-gradient(180deg, rgba(9,14,18,0.6), rgba(6,10,12,0.4));
+  border: 1px solid rgba(255,255,255,0.03);
+  color: var(--text);
 }
 
-/* Ensure header right side (buttons) match theme */
-.cls-shell .top-actions .btn,
-.cls-shell .top-actions .btn-ghost,
-.cls-shell .header-right .btn-ghost {
-  background: rgba(255,255,255,0.03) !important;
-  color: var(--text) !important;
-  border: 1px solid rgba(255,255,255,0.03) !important;
+/* Header / top area adjustments */
+#cls-app.cls-shell .top,
+#cls-app.cls-shell .brand,
+#cls-app.cls-shell .top .pill,
+#cls-app.cls-shell .top .pill * {
+  background: transparent;
+  color: var(--text);
 }
+
+/* KPI / stat cards */
+#cls-app.cls-shell .kpi > div,
+#cls-app.cls-shell .stat-card {
+  background: linear-gradient(180deg, rgba(8,12,14,0.38), rgba(6,10,12,0.28));
+  border: 1px solid rgba(255,255,255,0.03);
+  color: var(--text);
+}
+
+/* Ensure details.round looks dark */
+#cls-app.cls-shell details.round,
+#cls-app.cls-shell details.round > div,
+#cls-app.cls-shell details.round summary {
+  background: linear-gradient(180deg, rgba(9,14,18,0.6), rgba(6,10,12,0.4));
+  border: 1px solid rgba(255,255,255,0.03);
+  color: var(--text);
+}
+
+/* small text adjustments */
+#cls-app.cls-shell .muted { color: var(--muted) !important; }
+#cls-app.cls-shell a { color: rgba(255,255,255,0.92); }
+
+/* If some elements still show white due to very specific rules, you can temporarily add !important for narrow selectors (last resort) */
+/* Example (use only if required after testing):
+#cls-app.cls-shell .deckCard { background: linear-gradient(180deg, rgba(10,14,17,0.55), rgba(8,12,14,0.36)) !important; }
+*/
