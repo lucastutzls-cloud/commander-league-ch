@@ -1,0 +1,162 @@
+/* Scoped CLS Theme (kopiert/adaptiert)
+   Anwendung: füge die Klasse .cls-shell zu dem Container hinzu, den du stylen willst.
+   Beispiel: <div class="container cls-shell"> ... </div>
+*/
+
+/* Theme variables (scoped) */
+.cls-shell {
+  --cls-bg: #071018;
+  --cls-card-bg-a: #0b1318;
+  --cls-card-bg-b: #071014;
+  --cls-accent: #0b74de;
+  --cls-ghost-border: rgba(255,255,255,0.06);
+  --cls-muted: #9aa4b2;
+  --cls-text-on-dark: #e6eef6;
+  --cls-panel-radius: 10px;
+  --cls-gap: 12px;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color: var(--cls-text-on-dark);
+  box-sizing: border-box;
+}
+
+/* Ensure scoping */
+.cls-shell * { box-sizing: border-box; }
+
+/* Cards / Panels */
+.cls-shell .cls-card,
+.cls-shell .panel,
+.cls-shell .sidebar-section {
+  background: linear-gradient(180deg, var(--cls-card-bg-a), var(--cls-card-bg-b));
+  padding: 12px;
+  border-radius: var(--cls-panel-radius);
+  border: 1px solid rgba(255,255,255,0.03);
+  color: var(--cls-text-on-dark);
+  margin-bottom: 12px;
+}
+
+/* Text */
+.cls-shell .muted { color: var(--cls-muted); font-size: 13px; }
+.cls-shell strong, .cls-shell b { color: #ffffff; font-weight: 700; }
+
+/* Layout helpers */
+.cls-shell .cls-shell-inner { max-width: 1100px; margin: 16px auto; padding: 0 12px; }
+.cls-shell .cls-row { display:flex; gap:var(--cls-gap); align-items:flex-start; }
+.cls-shell .cls-sidebar { width: 180px; min-width:140px; }
+.cls-shell .cls-main { flex: 1; }
+
+/* Buttons */
+.cls-shell .report-btn {
+  background: #ffffff;
+  color: #081018;
+  border-radius: 22px;
+  padding: 8px 12px;
+  border: none;
+  font-weight: 800;
+  cursor: pointer;
+}
+.cls-shell .ghost,
+.cls-shell .btn-ghost,
+.cls-shell .cls-btn-ghost {
+  background: transparent;
+  border: 1px solid var(--cls-ghost-border);
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: var(--cls-text-on-dark);
+  cursor: pointer;
+}
+.cls-shell .ghost:hover,
+.cls-shell .report-btn:hover,
+.cls-shell .btn-ghost:hover { opacity: 0.95; }
+
+/* Pills */
+.cls-shell .cls-pill {
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  background: rgba(255,255,255,0.03);
+  font-size: 13px;
+  color: var(--cls-text-on-dark);
+}
+
+/* Entries / list items */
+.cls-shell .entry {
+  display:flex;
+  gap:12px;
+  align-items:center;
+  padding:10px;
+  border-radius:8px;
+  background: linear-gradient(180deg,#07141a,#061016);
+  border: 1px solid rgba(255,255,255,0.02);
+  margin-bottom:8px;
+  color: var(--cls-text-on-dark);
+}
+.cls-shell .entry .muted { color: var(--cls-muted); }
+
+/* Details / round summary */
+.cls-shell details { margin-bottom: 8px; }
+.cls-shell summary { cursor: pointer; list-style: none; display:flex; justify-content:space-between; align-items:center; gap:10px; }
+
+/* Avatars */
+.cls-shell img.avatar-small,
+.cls-shell img.player-avatar {
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255,255,255,0.03);
+}
+
+/* Modal */
+.cls-shell .cls-modal-overlay {
+  position: fixed;
+  left:0; top:0; width:100%; height:100%;
+  display: none;
+  align-items:center;
+  justify-content:center;
+  background: rgba(0,0,0,0.6);
+  z-index: 99999;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.cls-shell .cls-modal-overlay[aria-hidden="false"] { display:flex; }
+.cls-shell .cls-modal-box {
+  width: 820px;
+  max-width: 96%;
+  max-height: calc(100vh - 80px);
+  overflow: auto;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 16px;
+  color: #111;
+  box-shadow: 0 20px 40px rgba(2,6,23,0.2);
+}
+
+/* Standings */
+.cls-shell .standings { margin-top: 8px; }
+.cls-shell .standings ol { margin:8px 0 0 18px; padding:0; color: var(--cls-text-on-dark); }
+
+/* Inputs */
+.cls-shell input[type="text"],
+.cls-shell input[type="number"],
+.cls-shell input[type="email"],
+.cls-shell input[type="password"],
+.cls-shell textarea,
+.cls-shell select {
+  width:100%;
+  padding:8px;
+  border-radius:6px;
+  border:1px solid rgba(0,0,0,0.08);
+  background: rgba(255,255,255,0.98);
+  color:#111;
+  margin-top:6px;
+}
+
+/* Utilities */
+.cls-shell .small { font-size: 12px; color: var(--cls-muted); }
+.cls-shell .flex { display:flex; gap:8px; align-items:center; }
+
+/* Responsive */
+@media (max-width:900px){
+  .cls-shell .cls-row { flex-direction: column; }
+  .cls-shell .cls-sidebar { width:100%; }
+}
+
+/* End scoped theme */
