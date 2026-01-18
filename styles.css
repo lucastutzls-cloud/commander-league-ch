@@ -57,6 +57,13 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--text);-webkit-fo
 .modal-body{padding-top:8px}
 .modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
 
+/* Player Management */
+.player-row{display:flex;align-items:center;gap:12px;padding:8px;border-radius:8px;background:linear-gradient(180deg,#fff,#fbfdff);border:1px solid #eef2ff;margin-bottom:8px}
+.player-avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;background:linear-gradient(180deg,#f3f6ff,#fff);border:1px solid #eef2ff}
+.player-meta{display:flex;flex-direction:column}
+.player-actions{margin-left:auto;display:flex;gap:8px;align-items:center}
+.avatar-small{width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid #eef2ff}
+
 /* Responsive */
 @media (max-width:900px){
   .layout{flex-direction:column}
