@@ -23,20 +23,18 @@ const analytics = getAnalytics(app);
   };
 */
 const firebaseConfig = {
-  apiKey: "DEIN_API_KEY",
-  authDomain: "DEIN_PROJECT.firebaseapp.com",
-  projectId: "DEIN_PROJECT_ID",
-  storageBucket: "DEIN_PROJECT.appspot.com",
-  messagingSenderId: "DEIN_MESSAGING_ID",
-  appId: "DEIN_APP_ID"
+  apiKey: "AIzaSyCOyHrZXJkJtS2UzddH0sCN_NzRiILIheI",
+  authDomain: "commanderleague-ch.firebaseapp.com",
+  projectId: "commanderleague-ch",
+  storageBucket: "commanderleague-ch.firebasestorage.app",
+  messagingSenderId: "343380146333",
+  appId: "1:343380146333:web:b1553bdc651482c062bc74",
+  measurementId: "G-TJP8BYHC0F"
 };
 
-/* Initialisierung (compat) */
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
-const storage = firebase.storage();
-
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 /* ---------------------------
    UI Helper-Funktionen
    --------------------------- */
