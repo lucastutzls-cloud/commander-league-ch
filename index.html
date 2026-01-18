@@ -4,68 +4,78 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Commander League — Dashboard</title>
+
+  <!-- Haupt-Styling (deine styles.css, falls vorhanden) -->
   <link rel="stylesheet" href="styles.css">
-  <!-- Firebase v8 (compat) SDKs -->
+
+  <!-- Scoped CLS Theme (STEP 3) -->
+  <link rel="stylesheet" href="theme-cls.css">
+
+  <!-- Firebase v8 (compat) SDKs (benötigt für app.js/ui.js aus diesem Projekt) -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <h1 class="logo">Commander League</h1>
-      <nav class="top-actions">
-        <button id="btn-refresh" class="btn">Aktualisieren</button>
-        <button id="btn-signout" class="btn btn-ghost">Abmelden</button>
-      </nav>
+  <!-- EXISTIERENDE APP-INHALTE (behalte deine Struktur bei) -->
+  <div class="container">
+    <!-- Dein aktuelles Layout / Markup bleibt hier — example minimal -->
+    <header class="site-header">
+      <div class="container header-inner">
+        <h1 class="logo">Commander League</h1>
+        <nav class="top-actions">
+          <button id="btn-refresh" class="btn">Aktualisieren</button>
+          <button id="btn-signout" class="btn btn-ghost">Abmelden</button>
+        </nav>
+      </div>
+    </header>
+
+    <div class="container layout">
+      <aside class="sidebar">
+        <div class="sidebar-section">
+          <h2>Aktionen</h2>
+          <button id="generate-schedule" class="btn btn-primary">Spielplan generieren</button>
+          <button id="btn-add-player" class="btn" style="margin-top:8px">Spieler hinzufügen</button>
+        </div>
+
+        <div class="sidebar-section">
+          <h2>Spieler (wähle zur Generierung)</h2>
+          <div id="player-select" class="player-list">
+            <div class="muted">Lade Spieler…</div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <section class="panel">
+          <h2>Aktuelle Season</h2>
+          <div id="season-info" class="muted">Lade Season…</div>
+        </section>
+
+        <section class="panel">
+          <h2>Player Management</h2>
+          <div id="player-management" class="player-management">
+            <div class="muted">Lade Spielerverwaltung…</div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Spielplan</h2>
+          <div id="matches-list" class="matches-list">
+            <div class="muted">Keine Matches geladen.</div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>Tabelle / Stand</h2>
+          <div id="standings" class="standings muted">Noch nicht verfügbar.</div>
+        </section>
+      </main>
     </div>
-  </header>
-
-  <div class="container layout">
-    <aside class="sidebar">
-      <div class="sidebar-section">
-        <h2>Aktionen</h2>
-        <button id="generate-schedule" class="btn btn-primary">Spielplan generieren</button>
-        <button id="btn-create-season" class="btn">Neue Season</button>
-        <button id="btn-add-player" class="btn" style="margin-top:8px">Spieler hinzufügen</button>
-      </div>
-
-      <div class="sidebar-section">
-        <h2>Spieler (wähle zur Generierung)</h2>
-        <div id="player-select" class="player-list">
-          <div class="muted">Lade Spieler…</div>
-        </div>
-      </div>
-    </aside>
-
-    <main class="main">
-      <section class="panel">
-        <h2>Aktuelle Season</h2>
-        <div id="season-info" class="muted">Lade Season…</div>
-      </section>
-
-      <section class="panel">
-        <h2>Player Management</h2>
-        <div id="player-management" class="player-management">
-          <div class="muted">Lade Spielerverwaltung…</div>
-        </div>
-      </section>
-
-      <section class="panel">
-        <h2>Spielplan</h2>
-        <div id="matches-list" class="matches-list">
-          <div class="muted">Keine Matches geladen.</div>
-        </div>
-      </section>
-
-      <section class="panel">
-        <h2>Tabelle / Stand</h2>
-        <div id="standings" class="standings muted">Noch nicht verfügbar.</div>
-      </section>
-    </main>
   </div>
 
+  <!-- Modals (falls verwendet von ui.js) -->
   <!-- Match Result Modal -->
   <div id="match-modal" class="modal" aria-hidden="true">
     <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
@@ -128,9 +138,13 @@
     </div>
   </div>
 
-  <!-- app.js (Firebase init + generate-schedule + utilities) -->
+  <!-- Deine App-Initialisierung und Logic (ersetze/oder behalte deine vorhandenen Dateien) -->
+  <!-- app.js initialisiert Firebase & stellt window.db bereit -->
   <script src="app.js" defer></script>
-  <!-- ui.js (UI + Player management + Matches) -->
+  <!-- ui.js enthält UI-Logik (players, matches, modals) -->
   <script src="ui.js" defer></script>
+
+  <!-- CLS Theme Adapter (fügt .cls-shell automatisch hinzu) -->
+  <script src="cls-theme-adapter.js" defer></script>
 </body>
 </html>
