@@ -1,29 +1,80 @@
-# Beispiel Firestore Rules (entwicklungsmodus; bitte prüfen & testen)
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function isAdmin() {
+      return isSignedIn() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
+    }
+
     match /users/{userId} {
-      allow read: if request.auth != null;
-      allow write: if request.auth != null && request.auth.uid == userId;
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && request.auth.uid == userId
+        && request.resource.data.email == request.auth.token.email;
+      allow update: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      allow delete: if isSignedIn() && (request.auth.uid == userId || isAdmin());
     }
 
     match /decks/{deckId} {
-      allow read: if request.auth != null;
-      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
-      allow update: if request.auth != null && resource.data.userId == request.auth.uid;
-      allow delete: if request.auth != null && resource.data.userId == request.auth.uid;
-      // Admins should be allowed to change lockedSeasonId via admin flows (consider migrating admin changes to a separate collection)
+      allow read: if isSignedIn();
+
+      allow create: if isSignedIn()
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.deckName is string
+        && request.resource.data.commanderName is string;
+
+      allow update: if isSignedIn() && (
+        (request.auth.uid == resource.data.userId
+          && request.resource.data.userId == resource.data.userId
+          && request.resource.data.lockedSeasonId == resource.data.lockedSeasonId)
+        || isAdmin()
+      );
+
+      allow delete: if isSignedIn() && (request.auth.uid == resource.data.userId || isAdmin());
     }
 
     match /seasons/{seasonId} {
-      allow read: if request.auth != null;
-      allow create, update, delete: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
+      allow read: if isSignedIn();
+      allow create, update, delete: if isAdmin();
     }
 
     match /matches/{matchId} {
-      allow read: if request.auth != null;
-      allow create, update, delete: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
+      allow read: if isSignedIn();
+      allow create, delete: if isAdmin();
+
+      allow update: if isSignedIn() && (
+        isAdmin()
+        || (
+          (request.auth.uid == resource.data.homeUserId || request.auth.uid == resource.data.awayUserId)
+          && request.resource.data.homeUserId == resource.data.homeUserId
+          && request.resource.data.awayUserId == resource.data.awayUserId
+          && ( !( 'seasonId' in request.resource.data ) || request.resource.data.seasonId == resource.data.seasonId )
+          && ( !( 'scheduledDate' in request.resource.data ) || request.resource.data.scheduledDate == resource.data.scheduledDate )
+        )
+      );
     }
+
+    match /matches/{matchId}/games/{gameId} {
+      allow read: if isSignedIn();
+
+      allow create: if isSignedIn() && (
+        (
+          request.auth.uid == get(/databases/$(database)/documents/matches/$(matchId)).data.homeUserId
+          && request.resource.data.homeDeckId is string
+          && get(/databases/$(database)/documents/decks/$(request.resource.data.homeDeckId)).data.userId == request.auth.uid
+        )
+        ||
+        (
+          request.auth.uid == get(/databases/$(database)/documents/matches/$(matchId)).data.awayUserId
+          && request.resource.data.awayDeckId is string
+          && get(/databases/$(database)/documents/decks/$(request.resource.data.awayDeckId)).data.userId == request.auth.uid
+        )
+      );
+
+      allow update, delete: if isAdmin();
+    }
+
   }
 }
