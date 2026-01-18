@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Commander League — Duel Commander</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Add Google Font optionally -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+    <header class="app-header">
+      <div class="brand">
+        <img src="logo.png" alt="Commander League" id="logo" />
+        <h1>Commander League</h1>
+      </div>
+      <div id="user-area">
+        <span id="user-email"></span>
+        <button id="logout-btn" class="btn">Logout</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="auth-section" class="card">
+        <h2>Login / Registrierung</h2>
+        <div id="auth-forms">
+          <input id="email" placeholder="E‑Mail" />
+          <input id="password" type="password" placeholder="Passwort" />
+          <div class="btn-row">
+            <button id="btn-login" class="btn">Login</button>
+            <button id="btn-register" class="btn outline">Registrieren</button>
+          </div>
+        </div>
+      </section>
+
+      <nav id="tabs" class="tabs hidden">
+        <button data-tab="season" class="tab-btn">Season</button>
+        <button data-tab="spielplan" class="tab-btn">Spielplan</button>
+        <button data-tab="decks" class="tab-btn">DECKS</button>
+        <button data-tab="konto" class="tab-btn">KONTO</button>
+        <button data-tab="admin" class="tab-btn">ADMIN</button>
+      </nav>
+
+      <section id="content">
+
+        <!-- Season -->
+        <div id="season" class="tab-pane hidden card">
+          <h2>Season / Rangliste</h2>
+          <div id="standings"></div>
+        </div>
+
+        <!-- Spielplan -->
+        <div id="spielplan" class="tab-pane hidden card">
+          <h2>Spielplan</h2>
+          <div id="round-controls"></div>
+          <div id="matches-list"></div>
+        </div>
+
+        <!-- DECKS -->
+        <div id="decks" class="tab-pane hidden card">
+          <h2>Alle Decks</h2>
+          <input id="deck-search" placeholder="Suche Decks..." />
+          <div id="all-decks"></div>
+        </div>
+
+        <!-- KONTO -->
+        <div id="konto" class="tab-pane hidden card">
+          <h2>Mein Konto</h2>
+          <div id="profile-area">
+            <input id="displayName" placeholder="Benutzername" />
+            <button id="save-profile" class="btn">Speichern</button>
+            <button id="delete-account" class="btn danger">Konto löschen</button>
+          </div>
+          <hr />
+          <h3>Meine Decks (max. 3)</h3>
+          <div id="deck-forms"></div>
+          <button id="add-deck" class="btn outline">Deck hinzufügen</button>
+        </div>
+
+        <!-- ADMIN -->
+        <div id="admin" class="tab-pane hidden card">
+          <h2>Admin</h2>
+          <div id="admin-controls">
+            <input id="season-name" placeholder="Season Name" />
+            <input id="season-start" type="date" />
+            <input id="round-length" type="number" value="14" min="1" />
+            <button id="create-season" class="btn">Season erstellen</button>
+            <hr />
+            <div id="player-select"></div>
+            <button id="generate-schedule" class="btn">Spielplan generieren (Hin+Rück)</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <small>Commander League — Demo Starter</small>
+    </footer>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
+
+  <script src="app.js"></script>
+</body>
+</html>
