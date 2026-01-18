@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Commander League — Dashboard</title>
   <link rel="stylesheet" href="styles.css">
+  <!-- Firebase v8 (compat) SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 </head>
 <body>
   <header class="site-header">
@@ -23,12 +28,12 @@
         <h2>Aktionen</h2>
         <button id="generate-schedule" class="btn btn-primary">Spielplan generieren</button>
         <button id="btn-create-season" class="btn">Neue Season</button>
+        <button id="btn-add-player" class="btn" style="margin-top:8px">Spieler hinzufügen</button>
       </div>
 
       <div class="sidebar-section">
         <h2>Spieler (wähle zur Generierung)</h2>
         <div id="player-select" class="player-list">
-          <!-- player checkboxes werden hier gerendert -->
           <div class="muted">Lade Spieler…</div>
         </div>
       </div>
@@ -38,6 +43,13 @@
       <section class="panel">
         <h2>Aktuelle Season</h2>
         <div id="season-info" class="muted">Lade Season…</div>
+      </section>
+
+      <section class="panel">
+        <h2>Player Management</h2>
+        <div id="player-management" class="player-management">
+          <div class="muted">Lade Spielerverwaltung…</div>
+        </div>
       </section>
 
       <section class="panel">
@@ -81,7 +93,44 @@
     </div>
   </div>
 
-  <!-- Stelle sicher, dass firebase & app.js (init) geladen sind VOR ui.js -->
+  <!-- Player Modal (Create/Edit) -->
+  <div id="player-modal" class="modal" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="player-modal-title">
+      <header class="modal-header">
+        <h3 id="player-modal-title">Spieler erstellen</h3>
+        <button id="player-modal-close" class="btn-ghost">✕</button>
+      </header>
+      <div class="modal-body">
+        <form id="player-form">
+          <label>
+            Anzeige-Name
+            <input type="text" id="player-displayName" required>
+          </label>
+          <label>
+            E‑Mail (optional)
+            <input type="email" id="player-email" placeholder="email@example.com">
+          </label>
+          <label style="display:flex;align-items:center;gap:8px">
+            <input type="checkbox" id="player-isAdmin">
+            Admin-Rechte
+          </label>
+          <label>
+            Avatar (optional)
+            <input type="file" id="player-avatar" accept="image/*">
+          </label>
+          <div id="avatar-preview" style="margin-bottom:8px"></div>
+          <div class="modal-actions">
+            <button type="submit" class="btn btn-primary">Speichern</button>
+            <button type="button" id="player-modal-cancel" class="btn">Abbrechen</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- app.js (Firebase init + generate-schedule + utilities) -->
+  <script src="app.js" defer></script>
+  <!-- ui.js (UI + Player management + Matches) -->
   <script src="ui.js" defer></script>
 </body>
 </html>
