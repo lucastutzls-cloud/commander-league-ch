@@ -1,0 +1,59 @@
+:root{
+  --bg1: #0e1114;
+  --bg2: #152726;
+  --card: #1e2226;
+  --muted: #d6dbe0;
+  --accent: #ff6150; /* red accent */
+  --radius: 12px;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  background: linear-gradient(135deg,var(--bg1),var(--bg2));
+  color:var(--muted);
+  display:flex;
+  flex-direction:column;
+}
+
+.app-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px;
+  background:rgba(255,255,255,0.02);
+  border-bottom:1px solid rgba(255,255,255,0.03);
+}
+
+.brand{display:flex;align-items:center;gap:12px}
+.brand h1{margin:0;font-size:18px}
+#logo{height:48px;width:48px;border-radius:6px}
+
+main{padding:18px;flex:1}
+
+.card{
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  padding:16px;
+  border-radius:var(--radius);
+  margin-bottom:16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+}
+
+.tabs{display:flex;gap:8px;margin:8px 0}
+.tab-btn{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 14px;border-radius:20px;color:var(--muted);cursor:pointer}
+.tab-btn:hover{background:rgba(255,255,255,0.02)}
+
+.hidden{display:none}
+
+input, select, textarea{
+  background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px;border-radius:8px;color:var(--muted);width:100%;
+  margin:8px 0;
+}
+.btn{padding:8px 12px;border-radius:10px;border:0;background:#1f8ea0;color:white;cursor:pointer}
+.btn.outline{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+.btn.danger{background:var(--accent);}
+
+.btn-row{display:flex;gap:8px}
+.app-footer{padding:12px;text-align:center;color:rgba(255,255,255,0.5)}
