@@ -4,8 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Commander League — Duel Commander</title>
+  <link rel="icon" href="favicon.ico" />
   <link rel="stylesheet" href="styles.css" />
-  <!-- Add Google Font optionally -->
+  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -17,7 +18,7 @@
       </div>
       <div id="user-area">
         <span id="user-email"></span>
-        <button id="logout-btn" class="btn">Logout</button>
+        <button id="logout-btn" class="btn hidden">Logout</button>
       </div>
     </header>
 
@@ -43,7 +44,6 @@
       </nav>
 
       <section id="content">
-
         <!-- Season -->
         <div id="season" class="tab-pane hidden card">
           <h2>Season / Rangliste</h2>
@@ -99,11 +99,13 @@
     </footer>
   </div>
 
+  <!-- Firebase compat SDKs (wichtig: compat-Version, keine import-Anweisungen) -->
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
 
+  <!-- Deine App-Logik -->
   <script src="app.js"></script>
 </body>
 </html>
