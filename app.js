@@ -7,14 +7,19 @@
    Firebase Config (ERSETZEN)
    --------------------------- */
 /* 
-  So sieht das config-Objekt in Firebase aus (Beispiel):
-  const firebaseConfig = {
-    apiKey: "AIz....",
-    authDomain: "mein-projekt.firebaseapp.com",
-    projectId: "mein-projekt",
-    storageBucket: "mein-projekt.appspot.com",
-    messagingSenderId: "1234567890",
-    appId: "1:123:web:abcd"
+const firebaseConfig = {
+  apiKey: "AIzaSyCOyHrZXJkJtS2UzddH0sCN_NzRiILIheI",
+  authDomain: "commanderleague-ch.firebaseapp.com",
+  projectId: "commanderleague-ch",
+  storageBucket: "commanderleague-ch.firebasestorage.app",
+  messagingSenderId: "343380146333",
+  appId: "1:343380146333:web:b1553bdc651482c062bc74",
+  measurementId: "G-TJP8BYHC0F"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
   };
 */
 const firebaseConfig = {
